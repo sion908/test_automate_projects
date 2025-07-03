@@ -23,13 +23,14 @@ jobs:
           ESTIMATE: 1
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          PROJECT_ID=$(
-            gh project view $PROJECT_NUMBER \
-            --owner $OWNER \
-            --format json \
-            --jq '.id'
-          )
-          echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
+          echo "Adding issue $ISSUE_URL to project $OWNER  $PROJECT_NUMBER"
+          # PROJECT_ID=$(
+          #   gh project view $PROJECT_NUMBER \
+          #   --owner $OWNER \
+          #   --format json \
+          #   --jq '.id'
+          # )
+          # echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
 
           # # 1. Issueをプロジェクトに追加（v2用）
           # ITEM_JSON=$(gh project item-add $PROJECT_NUM --url "$ISSUE_URL" --owner "$OWNER" --format json)
