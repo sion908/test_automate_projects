@@ -50,9 +50,4 @@ jobs:
           # 2. Estimate=1 を設定
           echo "Setting Estimate=$ESTIMATE on item $ITEM_ID"
 
-          echo gh project item-edit \
-            --id $ITEM_ID \
-            --project-id $PROJECT_ID \
-            --field-id $FIELD_ID \
-            --number 1 \
-            --format json
+          echo "gh project item-edit --id $ITEM_ID --project-id $PROJECT_ID --field-id $FIELD_ID --number 1 --format json"
