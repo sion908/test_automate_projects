@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
 
-          ITEM_JSON=$(gh project item-add --project-id "$PROJECT_ID" --url "$ISSUE_URL" --format json)
+          ITEM_JSON=$(gh project item-add $PROJECT_ID --url "$ISSUE_URL" --owner "$OWNER" --format json)
           
           ITEM_ID=$(echo "$ITEM_JSON" | jq -r '.id')
 
