@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Install jq
         run: sudo apt-get install -y jq
+      - name: check gh version
+        run: gh --version
 
       - name: Add issue to GitHub Project and set Estimate
         env:
