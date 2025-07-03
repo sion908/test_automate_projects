@@ -10,32 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup GitHub CLI
-        uses: cli/cli-action@v2
-        with:
-          version: latest
-
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      - name: Authenticate gh CLI
-        run: gh auth login --with-token <<< "${{ secrets.GH_PROJECT_PAT }}"
-
-      - name: Add issue to project and set estimate
+      - name: Add issue to GitHub Project and set Estimate
         env:
           GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
-          PROJECT_ID: ${{ secrets.PROJECT_ID }}  # ← あなたのプロジェクトIDに置き換えてください
-          OWNER: ${{ secrets.OWNERPROJECT_ID }}   # ← 組織名またはユーザー名
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}
+          OWNER: ${{ secrets.OWNER_PROJECT_ID }}
           ESTIMATE: 1
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
-          echo "Adding $ISSUE_URL to project $PROJECT_ID"
+          echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
 
           ITEM_JSON=$(gh project item-add "$PROJECT_ID" --owner "$OWNER" --url "$ISSUE_URL" --format json)
           ITEM_ID=$(echo "$ITEM_JSON" | jq -r '.id')
 
-          echo "Setting Estimate=$ESTIMATE to item $ITEM_ID"
+          echo "Setting Estimate=$ESTIMATE on item $ITEM_ID"
           gh project item-edit "$PROJECT_ID" --id "$ITEM_ID" --field "Estimate=$ESTIMATE"
