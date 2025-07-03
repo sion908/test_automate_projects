@@ -16,12 +16,6 @@ jobs:
         run: gh --version
 
       - name: Add issue to GitHub Project and set Estimate
-        env:
-          GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
-          PROJECT_NUMBER: ${{ secrets.PROJECT_NUM }}
-          OWNER: ${{ secrets.OWNER_ID }}
-          ESTIMATE: 1
-          ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           PROJECT_ID=$(
             gh project view $PROJECT_NUMBER \
@@ -30,3 +24,9 @@ jobs:
             --jq '.id'
           )
           echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
+          PROJECT_NUMBER: ${{ secrets.PROJECT_NUM }}
+          OWNER: ${{ secrets.OWNER_ID }}
+          ESTIMATE: 1
+          ISSUE_URL: ${{ github.event.issue.html_url }}
