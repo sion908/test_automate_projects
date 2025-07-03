@@ -27,8 +27,8 @@ jobs:
       - name: Add issue to project and set estimate
         env:
           GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
-          PROJECT_ID: "PVT_xxxxxxxxx"  # ← あなたのプロジェクトIDに置き換えてください
-          OWNER: "your-org-or-user"   # ← 組織名またはユーザー名
+          PROJECT_ID: ${{ secrets.PROJECT_ID }}  # ← あなたのプロジェクトIDに置き換えてください
+          OWNER: ${{ secrets.OWNERPROJECT_ID }}   # ← 組織名またはユーザー名
           ESTIMATE: 1
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
