@@ -24,8 +24,8 @@ jobs:
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
           PROJECT_ID=$(
-            gh project view "${PROJECT_NUMBER}" \
-            --owner "${OWNER}" \
+            gh project view $PROJECT_NUMBER \
+            --owner $OWNER \
             --format json \
             --jq '.id'
           )
