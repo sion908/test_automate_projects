@@ -18,7 +18,7 @@ jobs:
       - name: Add issue to GitHub Project and set Estimate
         env:
           GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
-          PROJECT_NUM: ${{ secrets.PROJECT_NUM }}
+          PROJECT_NUMBER: ${{ secrets.PROJECT_NUM }}
           OWNER: ${{ secrets.OWNER_PROJECT_ID }}
           ESTIMATE: 1
           ISSUE_URL: ${{ github.event.issue.html_url }}
