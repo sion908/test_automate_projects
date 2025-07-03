@@ -25,7 +25,6 @@ jobs:
         run: |
           PROJECT_ID=$(
             gh project view $PROJECT_NUMBER \
-            --owner $OWNER \
             --format json \
             --jq '.id'
           )
