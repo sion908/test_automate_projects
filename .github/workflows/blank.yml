@@ -23,9 +23,10 @@ jobs:
         run: |
           echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
 
-          ITEM_JSON=$(gh project item-add $PROJECT_ID --url $ISSUE_URL --owner $OWNER --format json)
-          
+          # 1. Issueをプロジェクトに追加（v2用）
+          ITEM_JSON=$(gh project item-add --project-id "$PROJECT_ID" --url "$ISSUE_URL" --format json)
           ITEM_ID=$(echo "$ITEM_JSON" | jq -r '.id')
 
+          # 2. Estimate=1 を設定
           echo "Setting Estimate=$ESTIMATE on item $ITEM_ID"
-          gh project item-edit "$PROJECT_ID" --id "$ITEM_ID" --field "Estimate=$ESTIMATE"
+          gh project item-edit --project-id "$PROJECT_ID" --id "$ITEM_ID" --field "Estimate=$ESTIMATE"
