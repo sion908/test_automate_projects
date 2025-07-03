@@ -19,7 +19,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_PROJECT_PAT }}
           PROJECT_NUMBER: ${{ secrets.PROJECT_NUM }}
-          OWNER: ${{ secrets.OWNER_PROJECT_ID }}
+          OWNER: ${{ secrets.OWNER_ID }}
           ESTIMATE: 1
           ISSUE_URL: ${{ github.event.issue.html_url }}
         run: |
@@ -30,31 +30,3 @@ jobs:
             --jq '.id'
           )
           echo "Adding issue $ISSUE_URL to project $PROJECT_ID"
-
-          # # 1. Issueをプロジェクトに追加（v2用）
-          ITEM_JSON=$(gh project item-add $PROJECT_NUM --url "$ISSUE_URL" --owner "$OWNER" --format json)
-          ITEM_ID=$(echo "$ITEM_JSON" | jq -r '.id')
-
-          FIELD_ID=$(
-            gh project field-list "${PROJECT_NUMBER}" \
-            --owner "${OWNER}" \
-            --format json \
-            --jq '
-                .fields[]
-                | select(
-                  .name=="Estimate"
-                  and .type=="ProjectV2Field"
-                  )
-                | .id
-              '
-          )
-
-          # # 2. Estimate=1 を設定
-          echo "Setting Estimate=$ESTIMATE on item $ITEM_ID"
-
-          gh project item-edit
-            --id "${ITEM_ID}" \
-            --project-id "${PROJECT_ID}" \
-            --field-id "${FIELD_ID}" \
-            --number ${ESTIMATE} \
-            --format json
